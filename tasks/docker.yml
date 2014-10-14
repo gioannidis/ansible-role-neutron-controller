@@ -46,18 +46,18 @@
           "neutron_log_verbose" : "{{ neutron_log_verbose }}",
           "neutron_log_debug" : "{{ neutron_log_debug }}",
           "neutron_log_dir" : "{{ neutron_log_dir }}",
-          "neutron_rabbitmq_host" : "{{ neutron_rabbitmq_host|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
+          "neutron_rabbitmq_host" : "{{ neutron_rabbitmq_host }}",
           "neutron_rabbitmq_port" : "{{ neutron_rabbitmq_port }}",
           "neutron_rabbitmq_neutron_password" :
             "{{ neutron_rabbitmq_neutron_password }}",
-          "neutron_mysql_host" : "{{ neutron_mysql_host|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
+          "neutron_mysql_host" : "{{ neutron_mysql_host }}",
           "neutron_mysql_port" : "{{ neutron_mysql_port }}",
           "neutron_mysql_neutron_password" :
             "{{ neutron_mysql_neutron_password }}",
-          "neutron_compute_internal_url" : "{{ neutron_compute_internal_url|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
-          "neutron_identity_host" : "{{ neutron_identity_host|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
-          "neutron_identity_internal_url" : "{{ neutron_identity_internal_url|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
-          "neutron_identity_admin_url" : "{{ neutron_identity_admin_url|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
+          "neutron_compute_internal_url" : "{{ neutron_compute_internal_url }}",
+          "neutron_identity_host" : "{{ neutron_identity_host }}",
+          "neutron_identity_internal_url" : "{{ neutron_identity_internal_url }}",
+          "neutron_identity_admin_url" : "{{ neutron_identity_admin_url }}",
           "neutron_identity_admin_token" : "{{ neutron_identity_admin_token }}",
           "neutron_identity_neutron_password" : "{{ neutron_identity_neutron_password }}" }'
     detach: no
