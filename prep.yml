@@ -4,6 +4,11 @@
   sudo: True
   roles:
     - { role: marklee77.docker, when: neutron_controller_dockerized_deployment }
+
+- hosts: all
+  gather_facts: True
+  sudo: True
+  roles:
     - marklee77.mariadb
     - marklee77.rabbitmq-server
     - marklee77.keystone
