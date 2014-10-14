@@ -41,18 +41,18 @@ neutron_log_dir: /var/log/neutron
 neutron_log_verbose: true
 neutron_log_debug: false
 
-neutron_identity_endpoint_host: 127.0.0.1
-neutron_identity_admin_url: http://{{ neutron_identity_endpoint_host }}:35357/v2.0
-neutron_identity_internal_url: http://{{ neutron_identity_endpoint_host }}:5000/v2.0
-neutron_identity_public_url: http://{{ neutron_identity_endpoint_host }}:5000/v2.0
+neutron_identity_host: 127.0.0.1
+neutron_identity_admin_url: http://{{ neutron_identity_host }}:35357/v2.0
+neutron_identity_internal_url: http://{{ neutron_identity_host }}:5000/v2.0
+neutron_identity_public_url: http://{{ neutron_identity_host }}:5000/v2.0
 
-neutron_compute_endpoint_host: 127.0.0.1
-neutron_compute_internal_url: http://{{ neutron_compute_endpoint_host }}:8774
+neutron_compute_host: 127.0.0.1
+neutron_compute_internal_url: http://{{ neutron_compute_host }}:8774
 
-neutron_network_endpoint_host: 127.0.0.1
-neutron_network_admin_url: http://{{ neutron_network_endpoint_host }}:9696
-neutron_network_internal_url: http://{{ neutron_network_endpoint_host }}:9696
-neutron_network_public_url: http://{{ neutron_network_endpoint_host }}:9696
+neutron_network_host: 127.0.0.1
+neutron_network_admin_url: http://{{ neutron_network_host }}:9696
+neutron_network_internal_url: http://{{ neutron_network_host }}:9696
+neutron_network_public_url: http://{{ neutron_network_host }}:9696
 
 neutron_identity_region: RegionOne
 

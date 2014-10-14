@@ -55,7 +55,7 @@
           "neutron_mysql_neutron_password" :
             "{{ neutron_mysql_neutron_password }}",
           "neutron_compute_internal_url" : "{{ neutron_compute_internal_url|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
-          "neutron_identity_endpoint_host" : "{{ neutron_identity_endpoint_host|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
+          "neutron_identity_host" : "{{ neutron_identity_host|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
           "neutron_identity_internal_url" : "{{ neutron_identity_internal_url|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
           "neutron_identity_admin_url" : "{{ neutron_identity_admin_url|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
           "neutron_identity_admin_token" : "{{ neutron_identity_admin_token }}",
