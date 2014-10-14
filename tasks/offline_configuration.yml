@@ -81,11 +81,6 @@
     dest: /var/lib/neutron/neutron.sqlite
     state: absent
 
-- name: remove old log files
-  shell: rm /var/log/neutron/*
-  when: neutron_controller_dockerize_context is defined or
-        modify_neutron_ini|changed or modify_ml2_ini|changed
-
 - name: restart neutron controller if necessary
   service:
     name: "{{ item }}"
