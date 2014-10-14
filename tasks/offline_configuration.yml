@@ -10,6 +10,9 @@
 - name: ensure neutron.conf is properly configured
   ini_file:
     dest: /etc/neutron/neutron.conf
+    owner: neutron
+    group: neutron
+    mode: 0600
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
@@ -63,10 +66,16 @@
 - name: ensure ml2_conf.ini is properly configured
   ini_file:
     dest: /etc/neutron/plugins/ml2/ml2_conf.ini
+    owner: neutron
+    group: neutron
+    mode: 0600
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   with_items:
+    - { section: DEFAULT, option: verbose, value: "{{ neutron_log_verbose }}" }
+    - { section: DEFAULT, option: debug, value: "{{ neutron_log_debug }}" }
+    - { section: DEFAULT, option: log_dir, value: "{{ neutron_log_dir }}" }
     - { section: ml2, option: type_drivers, value: gre }
     - { section: ml2, option: tenant_network_types, value: gre }
     - { section: ml2, option: mechanism_drivers, value: openvswitch }
