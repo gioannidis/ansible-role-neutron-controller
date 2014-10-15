@@ -47,8 +47,7 @@ neutron_identity_internal_url: http://{{ neutron_identity_host }}:5000/v2.0
 neutron_identity_public_url: http://{{ neutron_identity_host }}:5000/v2.0
 
 neutron_compute_host: 127.0.0.1
-neutron_compute_internal_url: http://{{ nova_compute_host }}:8774/v2/%(tenant_id)s
-
+neutron_compute_internal_url: http://{{ nova_compute_host }}:8774/v2
 
 neutron_network_host: 127.0.0.1
 neutron_network_admin_url: http://{{ neutron_network_host }}:9696
