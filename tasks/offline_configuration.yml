@@ -42,7 +42,7 @@
     - { section: DEFAULT, option: nova_admin_username, value: nova }
     - { section: DEFAULT, option: nova_admin_password, 
         value: "{{ neutron_identity_nova_password }}" }
-    - { section: DEFAULT, option: nova_auth_admin_url,
+    - { section: DEFAULT, option: nova_admin_auth_url,
         value: "{{ neutron_identity_admin_url }}" }
     - { section: DEFAULT, option: core_plugin, value: ml2 }
     - { section: DEFAULT, option: service_plugins, value: router }
