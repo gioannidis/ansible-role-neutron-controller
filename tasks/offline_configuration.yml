@@ -36,14 +36,14 @@
     - { section: DEFAULT, 
         option: notify_nova_on_port_data_changes, value: true }
     - { section: DEFAULT, 
-        option: nova_url, value: "{{ neutron_compute_internal_url }}" }
+        option: nova_url, value: "{{ neutron_compute_admin_url }}" }
     - { section: DEFAULT, option: nova_admin_tenant_id, 
         value: "{{ identity_service_tenant.id }}" }
     - { section: DEFAULT, option: nova_admin_username, value: nova }
     - { section: DEFAULT, option: nova_admin_password, 
         value: "{{ neutron_identity_nova_password }}" }
-    - { section: DEFAULT, option: nova_admin_auth_url,
-        value: "{{ neutron_identity_internal_url }}" }
+    - { section: DEFAULT, option: nova_admin_admin_url,
+        value: "{{ neutron_identity_admin_url }}" }
     - { section: DEFAULT, option: core_plugin, value: ml2 }
     - { section: DEFAULT, option: service_plugins, value: router }
     - { section: DEFAULT, option: allow_overlapping_ips, value: true }
@@ -51,7 +51,7 @@
         value: "mysql://neutron:{{ neutron_mysql_neutron_password }}@{{ 
                   neutron_mysql_host }}:{{ neutron_mysql_port }}/neutron" }
     - { section: keystone_authtoken, option: auth_uri, 
-        value: "{{ neutron_identity_internal_url }}" }
+        value: "{{ neutron_identity_admin_url }}" }
     - { section: keystone_authtoken, option: auth_host, 
         value: "{{ neutron_identity_host }}" }
     - { section: keystone_authtoken, option: auth_port, value: 35357 }
