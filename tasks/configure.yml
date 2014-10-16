@@ -10,9 +10,8 @@
 - name: ensure neutron.conf is properly configured
   ini_file:
     dest: /etc/neutron/neutron.conf
-    owner: neutron
     group: neutron
-    mode: 0600
+    mode: 0640
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
@@ -67,9 +66,8 @@
 - name: ensure ml2_conf.ini is properly configured
   ini_file:
     dest: /etc/neutron/plugins/ml2/ml2_conf.ini
-    owner: neutron
     group: neutron
-    mode: 0600
+    mode: 0644
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
