@@ -11,20 +11,6 @@
     - python-mysqldb
     - python-neutronclient
 
-#- name: ensure that neutron directories exist and have correct permissions
-#  file:
-#    path: "{{ item }}"
-#    owner: neutron
-#    group: neutron
-#    mode: 0700
-#    state: directory
-#  with_items:
-#    - /etc/neutron
-#    - /var/lib/neutron
-#    - /var/run/neutron
-#    - /var/lock/neutron
-#    - /var/log/neutron
-
 - name: ensure neutron controller is started and enabled
   service: 
     name: "{{ item }}"
