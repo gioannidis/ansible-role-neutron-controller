@@ -9,7 +9,7 @@
 - include: install.yml
   when: not neutron_controller_dockerized_deployment 
 
-- include: offline_configuration.yml
+- include: configure.yml
   when: not neutron_controller_dockerized_deployment 
 
 - include: keystone.yml

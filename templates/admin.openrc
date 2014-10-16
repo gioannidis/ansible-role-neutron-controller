@@ -3,5 +3,5 @@ unset OS_TENANT_NAME
 unset OS_PASSWORD
 unset OS_AUTH_URL
 unset OS_REGION_NAME
-export OS_SERVICE_TOKEN={{ neutron_identity_admin_token }}
-export OS_SERVICE_ENDPOINT={{ neutron_identity_admin_url }}
+export OS_SERVICE_TOKEN={{ openstack_identity_admin_token }}
+export OS_SERVICE_ENDPOINT={{ openstack_identity_admin_url }}

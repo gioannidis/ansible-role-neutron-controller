@@ -10,8 +10,8 @@ RUN if [ ! -f playbooks/group_vars/all.yml ]; then \
     fi
 RUN ansible-playbook -i inventories/local.ini playbooks/install.yml
 
-VOLUME [ "/etc/neutron", "/var/lib/neutron", "/var/run/neutron", \
-         "/var/lock/neutron", "/var/log/neutron", "/var/log/supervisor" ]
+VOLUME [ "/etc/neutron", "/var/lib/neutron", "/var/log/neutron", \
+         "/var/log/supervisor" ]
 
 CMD [ "/usr/bin/supervisord" ]
 

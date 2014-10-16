@@ -43,23 +43,29 @@
     command: >
       ansible-playbook 
         -i inventories/local.ini playbooks/offline_configuration.yml -e '{ 
-          "neutron_log_verbose" : "{{ neutron_log_verbose }}",
-          "neutron_log_debug" : "{{ neutron_log_debug }}",
-          "neutron_log_dir" : "{{ neutron_log_dir }}",
-          "neutron_rabbitmq_host" : "{{ neutron_rabbitmq_host }}",
-          "neutron_rabbitmq_port" : "{{ neutron_rabbitmq_port }}",
-          "neutron_rabbitmq_neutron_password" :
-            "{{ neutron_rabbitmq_neutron_password }}",
-          "neutron_mysql_host" : "{{ neutron_mysql_host }}",
-          "neutron_mysql_port" : "{{ neutron_mysql_port }}",
-          "neutron_mysql_neutron_password" :
-            "{{ neutron_mysql_neutron_password }}",
-          "neutron_compute_internal_url" : "{{ neutron_compute_internal_url }}",
-          "neutron_identity_host" : "{{ neutron_identity_host }}",
-          "neutron_identity_internal_url" : "{{ neutron_identity_internal_url }}",
-          "neutron_identity_admin_url" : "{{ neutron_identity_admin_url }}",
-          "neutron_identity_admin_token" : "{{ neutron_identity_admin_token }}",
-          "neutron_identity_neutron_password" : "{{ neutron_identity_neutron_password }}" }'
+          "openstack_identity_admin_url" : "{{ openstack_identity_admin_url }}",
+          "openstack_identity_admin_token" : 
+            "{{ openstack_identity_admin_token }}",
+          "openstack_log_verbose" : "{{ openstack_log_verbose }}",
+          "openstack_log_debug" : "{{ openstack_log_debug }}",
+          "openstack_rabbitmq_host" : "{{ openstack_rabbitmq_host }}",
+          "openstack_rabbitmq_port" : "{{ openstack_rabbitmq_port }}",
+          "openstack_rabbitmq_neutron_password" :
+            "{{ openstack_rabbitmq_neutron_password }}",
+          "openstack_compute_endpoint_host" : 
+            "{{ openstack_compute_endpoint_host }}",
+          "openstack_identity_nova_password" : 
+            "{{ openstack_identity_nova_password }}", 
+          "openstack_mysql_host" : "{{ openstack_mysql_host }}",
+          "openstack_mysql_port" : "{{ openstack_mysql_port }}",
+          "openstack_mysql_neutron_password" :
+            "{{ openstack_mysql_neutron_password }}",
+          "openstack_identity_internal_url" : 
+            "{{ openstack_identity_internal_url }}",
+          "openstack_identity_endpoint_host" : 
+            "{{ openstack_identity_endpoint_host }}",
+          "openstack_identity_neutron_password" : 
+            "{{ openstack_identity_neutron_password }}" }'
     detach: no
     state: present
 

@@ -7,7 +7,7 @@
 - name: ensure neutron rabbitmq user is present
   rabbitmq_user:
     user: neutron
-    password: "{{ neutron_rabbitmq_neutron_password }}"
+    password: "{{ openstack_rabbitmq_neutron_password }}"
     vhost: /neutron
     configure_priv: .*
     read_priv: .*

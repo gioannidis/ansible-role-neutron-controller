@@ -1,8 +1,8 @@
 ---
 - name: probe keystone for service tenant id
   keystone_user:
-    endpoint: "{{ neutron_identity_admin_url }}"
-    token: "{{ neutron_identity_admin_token }}"
+    endpoint: "{{ openstack_identity_admin_url }}"
+    token: "{{ openstack_identity_admin_token }}"
     tenant: service
   register: identity_service_tenant
   changed_when: false
@@ -17,50 +17,51 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   with_items:
-    - { section: DEFAULT, option: verbose, value: "{{ neutron_log_verbose }}" }
-    - { section: DEFAULT, option: debug, value: "{{ neutron_log_debug }}" }
-    - { section: DEFAULT, option: log_dir, value: "{{ neutron_log_dir }}" }
+    - { section: DEFAULT, 
+        option: verbose, value: "{{ openstack_log_verbose }}" }
+    - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
+    - { section: DEFAULT, option: log_dir, value: /var/log/neutron }
     - { section: DEFAULT, 
         option: rpc_backend, value: neutron.openstack.common.rpc.impl_kombu }
     - { section: DEFAULT, 
-        option: rabbit_host, value: "{{ neutron_rabbitmq_host }}" }
+        option: rabbit_host, value: "{{ openstack_rabbitmq_host }}" }
     - { section: DEFAULT, 
-        option: rabbit_port, value: "{{ neutron_rabbitmq_port }}" }
+        option: rabbit_port, value: "{{ openstack_rabbitmq_port }}" }
     - { section: DEFAULT, option: rabbit_userid, value: neutron }
     - { section: DEFAULT, option: rabbit_password, 
-        value: "{{ neutron_rabbitmq_neutron_password }}" }
+        value: "{{ openstack_rabbitmq_neutron_password }}" }
     - { section: DEFAULT, option: rabbit_virtual_host, value: /neutron }
     - { section: DEFAULT, option: auth_strategy, value: keystone }
     - { section: DEFAULT, 
         option: notify_nova_on_port_status_changes, value: true }
     - { section: DEFAULT, 
         option: notify_nova_on_port_data_changes, value: true }
-    - { section: DEFAULT, 
-        option: nova_url, value: "{{ neutron_compute_admin_url }}" }
+    - { section: DEFAULT, option: nova_url, 
+        value: "http://{{ openstack_compute_endpoint_host }}:8774/v2" }
+    - { section: DEFAULT, option: nova_admin_username, value: nova }
     - { section: DEFAULT, option: nova_admin_tenant_id, 
         value: "{{ identity_service_tenant.id }}" }
-    - { section: DEFAULT, option: nova_admin_username, value: nova }
     - { section: DEFAULT, option: nova_admin_password, 
-        value: "{{ neutron_identity_nova_password }}" }
+        value: "{{ openstack_identity_nova_password }}" }
     - { section: DEFAULT, option: nova_admin_auth_url,
-        value: "{{ neutron_identity_admin_url }}" }
+        value: "{{ openstack_identity_admin_url }}" }
     - { section: DEFAULT, option: core_plugin, value: ml2 }
     - { section: DEFAULT, option: service_plugins, value: router }
     - { section: DEFAULT, option: allow_overlapping_ips, value: true }
     - { section: database, option: connection,
-        value: "mysql://neutron:{{ neutron_mysql_neutron_password }}@{{ 
-                  neutron_mysql_host }}:{{ neutron_mysql_port }}/neutron" }
+        value: "mysql://neutron:{{ openstack_mysql_neutron_password }}@{{ 
+                  openstack_mysql_host }}:{{ openstack_mysql_port }}/neutron" }
     - { section: keystone_authtoken, option: auth_uri, 
-        value: "{{ neutron_identity_admin_url }}" }
+        value: "{{ openstack_identity_internal_url }}" }
     - { section: keystone_authtoken, option: auth_host, 
-        value: "{{ neutron_identity_host }}" }
+        value: "{{ openstack_identity_endpoint_host }}" }
     - { section: keystone_authtoken, option: auth_port, value: 35357 }
     - { section: keystone_authtoken, option: auth_protocol, value: http }
     - { section: keystone_authtoken, option: admin_tenant_name, 
         value: service }
     - { section: keystone_authtoken, option: admin_user, value: neutron }
     - { section: keystone_authtoken, option: admin_password, 
-        value: "{{ neutron_identity_neutron_password }}" }
+        value: "{{ openstack_identity_neutron_password }}" }
   register: modify_neutron_ini
 
 - name: ensure ml2_conf.ini is properly configured
@@ -73,9 +74,10 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   with_items:
-    - { section: DEFAULT, option: verbose, value: "{{ neutron_log_verbose }}" }
-    - { section: DEFAULT, option: debug, value: "{{ neutron_log_debug }}" }
-    - { section: DEFAULT, option: log_dir, value: "{{ neutron_log_dir }}" }
+    - { section: DEFAULT, 
+        option: verbose, value: "{{ openstack_log_verbose }}" }
+    - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
+    - { section: DEFAULT, option: log_dir, value: /var/log/neutron }
     - { section: ml2, option: type_drivers, value: gre }
     - { section: ml2, option: tenant_network_types, value: gre }
     - { section: ml2, option: mechanism_drivers, value: openvswitch }
@@ -85,11 +87,6 @@
     - { section: securitygroup, option: enable_security_group, value: true }
   register: modify_ml2_ini
 
-- name: ensure neutron sqlite is deleted
-  file:
-    dest: /var/lib/neutron/neutron.sqlite
-    state: absent
-
 - name: restart neutron controller if necessary
   service:
     name: "{{ item }}"
@@ -98,4 +95,9 @@
     - neutron-server
   when: (modify_neutron_ini|changed or modify_ml2_ini|changed) and
         neutron_controller_dockerize_context is not defined
+
+- name: ensure neutron sqlite is deleted
+  file:
+    dest: /var/lib/neutron/neutron.sqlite
+    state: absent
 

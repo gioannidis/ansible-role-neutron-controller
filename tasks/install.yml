@@ -11,36 +11,19 @@
     - python-mysqldb
     - python-neutronclient
 
-- name: ensure that neutron directories exist and have correct permissions
-  file:
-    path: "{{ item }}"
-    owner: neutron
-    group: neutron
-    mode: 0700
-    state: directory
-  with_items:
-    - /etc/neutron
-    - /var/lib/neutron
-    - /var/run/neutron
-    - /var/lock/neutron
-    - /var/log/neutron
-
-- name: ensure supervisor is installed for dockerized deployments 
-  apt: 
-    pkg: "{{ item }}"
-    state: latest 
-    update_cache: yes 
-    cache_valid_time: 600
-  with_items:
-    - supervisor
-
-- name: update supervisor configuration from template for dockerized deployments
-  template:
-    src: etc/supervisor/conf.d/supervisord.conf
-    dest: /etc/supervisor/conf.d/supervisord.conf
-    owner: root
-    group: root
-    mode: 0644
+#- name: ensure that neutron directories exist and have correct permissions
+#  file:
+#    path: "{{ item }}"
+#    owner: neutron
+#    group: neutron
+#    mode: 0700
+#    state: directory
+#  with_items:
+#    - /etc/neutron
+#    - /var/lib/neutron
+#    - /var/run/neutron
+#    - /var/lock/neutron
+#    - /var/log/neutron
 
 - name: ensure neutron controller is started and enabled
   service: 
@@ -58,3 +41,20 @@
   with_items:
     - neutron-server
   when: neutron_controller_dockerize_context is defined
+
+- name: ensure supervisor is installed for dockerized deployments 
+  apt: 
+    pkg: "{{ item }}"
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items:
+    - supervisor
+
+- name: update supervisor configuration from template for dockerized deployments
+  template:
+    src: etc/supervisor/conf.d/supervisord.conf
+    dest: /etc/supervisor/conf.d/supervisord.conf
+    owner: root
+    group: root
+    mode: 0644
