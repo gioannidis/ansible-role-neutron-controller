@@ -1,60 +1,58 @@
 ---
-neutron_run_dir: "{{ lookup('env', 'PWD') }}"
-neutron_mysql_root_password: >
-  {{ lookup('password', neutron_run_dir + 
+openstack_run_dir: "{{ lookup('env', 'PWD') }}"
+openstack_mysql_root_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/mysql-root-password 
                          length=20 
                          chars=ascii_letters,digits') }}
-neutron_mysql_neutron_password: >
-  {{ lookup('password', neutron_run_dir + 
+openstack_mysql_neutron_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/mysql-neutron-password 
                          length=20 
                          chars=ascii_letters,digits') }}
-neutron_rabbitmq_neutron_password: >
-  {{ lookup('password', neutron_run_dir + 
+openstack_rabbitmq_neutron_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/rabbitmq-neutron-password 
                          length=20 
                          chars=ascii_letters,digits') }}
-neutron_identity_admin_token: >
-  {{ lookup('password', neutron_run_dir + 
+openstack_identity_admin_token: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/keystone-admin-token 
                          length=20 
                          chars=ascii_letters,digits') }}
-neutron_identity_nova_password: >
-  {{ lookup('password', neutron_run_dir + 
+openstack_identity_nova_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/keystone-nova-password 
                          length=20 
                          chars=ascii_letters,digits') }}
-neutron_identity_neutron_password: >
-  {{ lookup('password', neutron_run_dir + 
+openstack_identity_neutron_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/keystone-neutron-password 
                          length=20 
                          chars=ascii_letters,digits') }}
 
-neutron_mysql_host: 127.0.0.1
-neutron_mysql_port: 3306
+openstack_mysql_host: 127.0.0.1
+openstack_mysql_port: 3306
 
-neutron_rabbitmq_host: 127.0.0.1
-neutron_rabbitmq_port: 5672
+openstack_rabbitmq_host: 127.0.0.1
+openstack_rabbitmq_port: 5672
 
-neutron_log_dir: /var/log/neutron
-neutron_log_verbose: true
-neutron_log_debug: false
+openstack_log_verbose: true
+openstack_log_debug: false
 
-neutron_identity_host: 127.0.0.1
-neutron_identity_admin_url: http://{{ neutron_identity_host }}:35357/v2.0
-neutron_identity_internal_url: http://{{ neutron_identity_host }}:5000/v2.0
-neutron_identity_public_url: http://{{ neutron_identity_host }}:5000/v2.0
+openstack_identity_endpoint_host: 127.0.0.1
+openstack_identity_admin_url: http://{{ openstack_identity_endpoint_host }}:35357/v2.0
+openstack_identity_internal_url: http://{{ openstack_identity_endpoint_host }}:5000/v2.0
+openstack_identity_public_url: http://{{ openstack_identity_endpoint_host }}:5000/v2.0
 
-neutron_compute_host: 127.0.0.1
-neutron_compute_admin_url: http://{{ nova_compute_host }}:8774/v2
+openstack_compute_endpoint_host: 127.0.0.1
 
-neutron_network_host: 127.0.0.1
-neutron_network_admin_url: http://{{ neutron_network_host }}:9696
-neutron_network_internal_url: http://{{ neutron_network_host }}:9696
-neutron_network_public_url: http://{{ neutron_network_host }}:9696
+openstack_network_endpoint_host: 127.0.0.1
+openstack_network_admin_url: http://{{ openstack_network_endpoint_host }}:9696
+openstack_network_internal_url: http://{{ openstack_network_endpoint_host }}:9696
+openstack_network_public_url: http://{{ openstack_network_endpoint_host }}:9696
 
-neutron_identity_region: RegionOne
+openstack_default_region: RegionOne
 
 # The variables below only apply to dockerized deployment
 neutron_controller_dockerized_deployment: false
