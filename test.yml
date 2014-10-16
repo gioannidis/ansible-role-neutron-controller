@@ -3,12 +3,12 @@
   sudo: False
   vars:
     openstack_identity_demo_password: password
-    openstack_openstack_internal_network_name: demo-net
+    openstack_internal_network_name: demo-net
     openstack_internal_network_subnet_name: demo-subnet
     openstack_internal_network_subnet_cidr: 192.168.0.0/24
     openstack_internal_network_subnet_dns_nameservers: 8.8.8.8
     openstack_internal_network_subnet_gateway_ip: 192.168.0.1
-    opentack_openstack_router_name: demo-router
+    openstack_router_name: demo-router
   tasks:
 
     - name: update admin.openrc from template
@@ -19,35 +19,35 @@
 
     - name: create demo tenant
       keystone_user:
-        endpoint: "{{ neutron_identity_admin_url }}"
-        token: "{{ neutron_identity_admin_token }}"
+        endpoint: "{{ openstack_identity_admin_url }}"
+        token: "{{ openstack_identity_admin_token }}"
         tenant: demo
         tenant_description: "Demo Tenant"
 
     - name: create demo user
       keystone_user:
-        endpoint: "{{ neutron_identity_admin_url }}"
-        token: "{{ neutron_identity_admin_token }}"
+        endpoint: "{{ openstack_identity_admin_url }}"
+        token: "{{ openstack_identity_admin_token }}"
         tenant: demo
         user: demo
         password: "{{ openstack_identity_demo_password }}"
 
     - name: associate _member_ role with demo user
       keystone_user:
-        endpoint: "{{ neutron_identity_admin_url }}"
-        token: "{{ neutron_identity_admin_token }}"
+        endpoint: "{{ openstack_identity_admin_url }}"
+        token: "{{ openstack_identity_admin_token }}"
         tenant: demo
         user: demo
         role: _member_
 
     # Ansible neutron modules lists all tenants to get ids, but this is not
-    # permitted for non-admin users. Need to fix neutron_* modules as non-admin
+    # permitted for non-admin users. Need to fix openstack_* modules as non-admin
     # *should* be able to create networks, associate floating ips, etc.
 
     - name: ensure demo user has admin role
       keystone_user:
-        endpoint: "{{ neutron_identity_admin_url }}"
-        token: "{{ neutron_identity_admin_token }}"
+        endpoint: "{{ openstack_identity_admin_url }}"
+        token: "{{ openstack_identity_admin_token }}"
         tenant: demo
         user: demo
         role: admin
@@ -60,7 +60,7 @@
 
     - name: ensure internal network is registered
       neutron_network:
-        auth_url: "{{ neutron_identity_public_url }}"
+        auth_url: "{{ openstack_identity_public_url }}"
         login_tenant_name: demo
         login_username: demo
         login_password: "{{ openstack_identity_demo_password }}"
@@ -71,7 +71,7 @@
 
     - name: ensure subnet internal network is registered
       neutron_subnet:
-        auth_url: "{{ neutron_identity_public_url }}"
+        auth_url: "{{ openstack_identity_public_url }}"
         login_tenant_name: demo
         login_username: demo
         login_password: "{{ openstack_identity_demo_password }}"
@@ -86,7 +86,7 @@
 
     - name: ensure router exists
       neutron_router:
-        auth_url: "{{ neutron_identity_public_url }}"
+        auth_url: "{{ openstack_identity_public_url }}"
         login_tenant_name: demo
         login_username: demo
         login_password: "{{ openstack_identity_demo_password }}"
@@ -96,7 +96,7 @@
 
     - name: ensure router has interface connected to internal network
       neutron_router_interface:
-        auth_url: "{{ neutron_identity_public_url }}"
+        auth_url: "{{ openstack_identity_public_url }}"
         login_tenant_name: demo
         login_username: demo
         login_password: "{{ openstack_identity_demo_password }}"
