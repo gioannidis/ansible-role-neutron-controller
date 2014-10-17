@@ -85,12 +85,8 @@
     - { section: securitygroup, option: enable_security_group, value: true }
   register: modify_ml2_ini
 
-- name: restart neutron controller if necessary
-  service:
-    name: "{{ item }}"
-    state: restarted
-  with_items:
-    - neutron-server
+- name: restart neutron services if changes are made to configuration files
+  shell: ls /etc/init/neutron-* | grep -v ovs | while read initconf; do service $(basename ${initconf} .conf) restart; done
   when: (modify_neutron_ini|changed or modify_ml2_ini|changed) and
         neutron_controller_dockerize_context is not defined
 
