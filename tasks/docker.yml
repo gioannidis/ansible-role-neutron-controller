@@ -22,13 +22,13 @@
     owner: "{{ ansible_ssh_user }}"
     state: directory
   with_items:
-    - "{{ ansible_env.PWD }}/.ansible_cache/docker/neutron-controller/playbooks/group_vars"
+    - "{{ ansible_env.PWD }}/.ansible_cache/docker/neutron-controller/provisioning/group_vars"
 
 - name: update configuration used to build docker image from template
   template:
-    src: ansible_cache/docker/neutron-controller/playbooks/group_vars/all.yml
+    src: ansible_cache/docker/neutron-controller/provisioning/group_vars/all.yml
     owner: "{{ ansible_ssh_user }}"
-    dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/neutron-controller/playbooks/group_vars/all.yml"
+    dest: "{{ ansible_env.PWD }}/.ansible_cache/docker/neutron-controller/provisioning/group_vars/all.yml"
 
 - name: ensure neutron docker image has been built
   docker_image:
@@ -42,7 +42,7 @@
     name: "{{ neutron_controller_docker_containername }}_data"
     command: >
       ansible-playbook 
-        -i inventories/local.ini playbooks/configure.yml -e '{ 
+        -i inventories/local.ini provisioning/configure.yml -e '{ 
           "openstack_identity_admin_url" : "{{ openstack_identity_admin_url }}",
           "openstack_identity_admin_token" : 
             "{{ openstack_identity_admin_token }}",
