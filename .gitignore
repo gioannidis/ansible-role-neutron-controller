@@ -1,5 +1,5 @@
 .vagrant
-library/*
 private
+provisioning/library
 roles/*
 !roles/marklee77.neutron-controller
