@@ -20,11 +20,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "getreqs.yml"
+    ansible.playbook = "provisioning/getreqs.yml"
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "prep.yml"
+    ansible.playbook = "provisioning/prep.yml"
     #ansible.extra_vars = {
     #  neutron_controller_dockerized_deployment: true,
     #  mariadb_bind_address: "0.0.0.0",
@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "deploy.yml"
+    ansible.playbook = "provisioning/deploy.yml"
     #ansible.extra_vars = {
     #  neutron_controller_dockerized_deployment: true,
     #  openstack_rabbitmq_host: "{{ ansible_docker0['ipv4']['address'] }}",
@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "test.yml"
+    ansible.playbook = "provisioning/test.yml"
   end
 
 end
