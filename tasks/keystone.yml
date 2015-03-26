@@ -19,7 +19,7 @@
   keystone_service:
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
-    region: "{{ openstack_default_region }}"
+    region: "{{ openstack_identity_region }}"
     name: neutron
     type: network
     description: "Network Service"
