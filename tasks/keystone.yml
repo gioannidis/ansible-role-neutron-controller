@@ -1,5 +1,8 @@
 ---
 - name: create neutron user in keystone
+  environment:
+    http_proxy: ''
+    HTTP_PROXY: ''
   keystone_user:
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
@@ -8,6 +11,9 @@
     password: "{{ openstack_identity_neutron_password }}"
 
 - name: add neutron user to the service tenant with the admin role
+  environment:
+    http_proxy: ''
+    HTTP_PROXY: ''
   keystone_user:
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
@@ -16,6 +22,9 @@
     role: admin
 
 - name: add neutron endpoint
+  environment:
+    http_proxy: ''
+    HTTP_PROXY: ''
   keystone_service:
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
