@@ -1,5 +1,8 @@
 ---
 - name: probe keystone for service tenant id
+  environment:
+    http_proxy: ''
+    HTTP_PROXY: ''
   keystone_user:
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
