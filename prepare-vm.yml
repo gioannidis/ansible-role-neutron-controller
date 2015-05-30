@@ -3,29 +3,7 @@
   gather_facts: True
   sudo: True
   roles:
-    - { role: marklee77.docker, when: neutron_controller_dockerized_deployment }
-
-- hosts: all
-  gather_facts: True
-  sudo: True
-  roles:
-    - marklee77.mariadb
-    - marklee77.rabbitmq-server
-    - marklee77.keystone
-    - marklee77.nova-controller
-
-- hosts: all
-  gather_facts: True
-  sudo: True
-  tasks:
-
-    - name: ensure required packages for prep are installed
-      apt:
-        pkg: "{{ item }}"
-        state: latest
-        update_cache: yes
-        cache_valid_time: 600
-      with_items:
-        - python-mysqldb
-        - python-keystoneclient
-        - python-neutronclient
+    - mysql
+    - rabbitmq-server
+    - keystone
+    - nova-controller
