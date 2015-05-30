@@ -1,16 +1,12 @@
 ---
 galaxy_info:
   author: Mark Stillwell
-  description: OpenStack Neutron Controller for Ubuntu
+  description: OpenStack Neutron controller for Ubuntu
   license: GPLv2
   min_ansible_version: 1.2
   platforms:
   - name: Ubuntu
     versions:
-    - precise
-    - quantal
-    - raring
-    - saucy
     - trusty
   categories:
   - cloud

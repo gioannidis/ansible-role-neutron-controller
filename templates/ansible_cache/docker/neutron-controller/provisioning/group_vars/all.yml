@@ -1,5 +1,0 @@
----
-# This file is ONLY for variables that are expected to be static across all
-# deployments or that may affect the image BUILD. Configuration and runtime
-# variables should be passed directly.
-neutron_controller_dockerize_context: docker

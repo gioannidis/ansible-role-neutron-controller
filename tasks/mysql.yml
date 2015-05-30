@@ -9,7 +9,6 @@
     login_user: root
     login_password: "{{ openstack_mysql_root_password }}"
     name: neutron
-  register: create_neutron_db
 
 - name: ensure neutron database user is present
   mysql_user:

@@ -90,8 +90,7 @@
 
 - name: restart neutron services if changes are made to configuration files
   shell: ls /etc/init/neutron-* | grep -v ovs | while read initconf; do service $(basename ${initconf} .conf) restart; done
-  when: (modify_neutron_ini|changed or modify_ml2_ini|changed) and
-        neutron_controller_dockerize_context is not defined
+  when: modify_neutron_ini|changed or modify_ml2_ini|changed
 
 - name: ensure neutron sqlite is deleted
   file:

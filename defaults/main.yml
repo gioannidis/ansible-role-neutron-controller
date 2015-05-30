@@ -57,9 +57,3 @@ openstack_network_internal_url: >
 openstack_network_public_url: http://{{ openstack_network_endpoint_host }}:9696
 
 openstack_identity_region: RegionOne
-
-# The variables below only apply to dockerized deployment
-neutron_controller_dockerized_deployment: false
-neutron_controller_docker_username: default
-neutron_controller_docker_imagename: neutron-controller
-neutron_controller_docker_containername: neutron-controller
