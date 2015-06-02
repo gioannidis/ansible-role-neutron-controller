@@ -1,6 +1,8 @@
 ---
 - hosts: all
   sudo: False
+  vars_files:
+    - defaults/main.yml
   vars:
     openstack_identity_demo_password: password
     openstack_internal_network_name: demo-net

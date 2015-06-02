@@ -35,5 +35,3 @@
     public_url: "{{ openstack_network_public_url }}"
     internal_url: "{{ openstack_network_internal_url }}"
     admin_url: "{{ openstack_network_admin_url }}"
-
-
