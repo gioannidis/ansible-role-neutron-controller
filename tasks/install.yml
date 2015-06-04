@@ -1,20 +1,25 @@
 ---
-- name: ensure neutron controller packages and dependencies are installed
-  apt: 
-    pkg: "{{ item }}"
-    state: latest 
-    update_cache: yes 
-    cache_valid_time: 600
-  with_items:
-    - neutron-server
-    - neutron-plugin-ml2
-    - python-mysqldb
-    - python-neutronclient
+- name: ensure openstack neutron controller requirements packages are installed
+  action: "{{ openstack_neutron_controller_package_info.pkg_mgr }}"
+  args: openstack_neutron_controller_package_info.args
+  with_items: openstack_neutron_controller_package_info.pre_pkgs
+  when: openstack_neutron_controller_package_info.pre_pkgs|length > 0
 
-- name: ensure neutron controller is started and enabled
-  service: 
+- name: ensure openstack repository is enabled
+  action: "{{ openstack_neutron_controller_repo_info.pkg_repo }}"
+  args: openstack_neutron_controller_repo_info.args
+  with_items: openstack_neutron_controller_repo_info.repos
+  when: openstack_neutron_controller_repo_info.repos|length > 0
+
+- name: ensure openstack neutron controller packages are installed
+  action: "{{ openstack_neutron_controller_package_info.pkg_mgr }}"
+  args: openstack_neutron_controller_package_info.args
+  with_items: openstack_neutron_controller_package_info.pkgs
+  when: openstack_neutron_controller_package_info.pkgs|length > 0
+
+- name: ensure neutron_controller services are started and enabled
+  service:
     name: "{{ item }}"
-    state: started 
+    state: started
     enabled: yes
-  with_items:
-    - neutron-server
+  with_items: openstack_neutron_controller_services

@@ -1,0 +1,27 @@
+openstack_neutron_controller_package_info:
+  pkg_mgr: apt
+  args:
+    pkg: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 600
+    state: latest
+  pre_pkgs:
+    - ubuntu-cloud-keyring
+  pkgs:
+    - neutron-server
+    - neutron-plugin-ml2
+    - python-mysqldb
+    - python-neutronclient
+
+openstack_neutron_controller_repo_info:
+  pkg_repo: apt_repository
+  args:
+    repo: "{{ item }}"
+    update_cache: yes
+    state: present
+  repos:
+    - deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/icehouse main
+    - deb-src http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/icehouse main
+
+openstack_neutron_controller_services:
+  - neutron-server
