@@ -1,6 +1,8 @@
 neutron-controller ansible role
 ===============================
 
+[![Build Status](https://travis-ci.org/marklee77/ansible-role-neutron-controller.svg?branch=master)](https://travis-ci.org/marklee77/ansible-role-neutron-controller)
+
 The purpose of this role is to deploy neutron-controller onto Ubuntu. 
 
 Role Variables
