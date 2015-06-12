@@ -23,3 +23,5 @@
     state: started
     enabled: yes
   with_items: openstack_neutron_controller_services
+  when: openstack_neutron_controller_services|length > 0
+
