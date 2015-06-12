@@ -88,10 +88,11 @@
     - { section: securitygroup, option: enable_security_group, value: true }
   register: modify_ml2_ini
 
-- name: restart neutron services if changes are made to configuration files
-  shell: ls /etc/init/neutron-* | grep -v ovs | while read config; do 
-           service $(basename $config .conf) restart; 
-         done
+- name: restart neutron services if necessary
+  shell: >
+    ls /etc/init/neutron-* | grep -v ovs | while read conf; do 
+      service $(basename ${conf} .conf) restart; 
+    done
   when: modify_neutron_ini|changed or modify_ml2_ini|changed
 
 - name: ensure neutron sqlite is deleted
