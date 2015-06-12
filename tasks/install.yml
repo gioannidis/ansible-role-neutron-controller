@@ -17,7 +17,7 @@
   with_items: openstack_neutron_controller_package_info.pkgs
   when: openstack_neutron_controller_package_info.pkgs|length > 0
 
-- name: ensure neutron_controller services are started and enabled
+- name: ensure neutron controller services are started and enabled
   service:
     name: "{{ item }}"
     state: started
