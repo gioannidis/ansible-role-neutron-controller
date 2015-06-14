@@ -19,18 +19,18 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   with_items:
-    - { section: DEFAULT, 
+    - { section: DEFAULT,
         option: verbose, value: "{{ openstack_log_verbose }}" }
     - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
     - { section: DEFAULT, option: log_dir, value: /var/log/neutron }
-    - { section: DEFAULT, 
+    - { section: DEFAULT,
         option: rpc_backend, value: neutron.openstack.common.rpc.impl_kombu }
-    - { section: DEFAULT, 
+    - { section: DEFAULT,
         option: rabbit_host, value: "{{ openstack_rabbitmq_host }}" }
-    - { section: DEFAULT, 
+    - { section: DEFAULT,
         option: rabbit_port, value: "{{ openstack_rabbitmq_port }}" }
     - { section: DEFAULT, option: rabbit_userid, value: neutron }
-    - { section: DEFAULT, option: rabbit_password, 
+    - { section: DEFAULT, option: rabbit_password,
         value: "{{ openstack_rabbitmq_neutron_password }}" }
     - { section: DEFAULT, option: rabbit_virtual_host, value: /neutron }
     - { section: DEFAULT, option: auth_strategy, value: keystone }
@@ -53,16 +53,16 @@
     - { section: database, option: connection,
         value: "mysql://neutron:{{ openstack_mysql_neutron_password }}@{{ 
                   openstack_mysql_host }}:{{ openstack_mysql_port }}/neutron" }
-    - { section: keystone_authtoken, option: auth_uri, 
+    - { section: keystone_authtoken, option: auth_uri,
         value: "{{ openstack_identity_internal_url }}" }
-    - { section: keystone_authtoken, option: auth_host, 
+    - { section: keystone_authtoken, option: auth_host,
         value: "{{ openstack_identity_endpoint_host }}" }
     - { section: keystone_authtoken, option: auth_port, value: 35357 }
     - { section: keystone_authtoken, option: auth_protocol, value: http }
-    - { section: keystone_authtoken, option: admin_tenant_name, 
+    - { section: keystone_authtoken, option: admin_tenant_name,
         value: service }
     - { section: keystone_authtoken, option: admin_user, value: neutron }
-    - { section: keystone_authtoken, option: admin_password, 
+    - { section: keystone_authtoken, option: admin_password,
         value: "{{ openstack_identity_neutron_password }}" }
   register: modify_neutron_ini
 
@@ -83,16 +83,18 @@
     - { section: ml2, option: tenant_network_types, value: gre }
     - { section: ml2, option: mechanism_drivers, value: openvswitch }
     - { section: ml2_type_gre, option: tunnel_id_ranges, value: "1:1000" }
-    - { section: securitygroup, option: firewall_driver, 
-        value: neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver }
+    - { section: securitygroup, option: firewall_driver,
+        value: 
+          neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver 
+      }
     - { section: securitygroup, option: enable_security_group, value: true }
   register: modify_ml2_ini
 
 - name: restart neutron services if necessary
   shell: >
-    ls /etc/init/neutron-* | grep -v ovs | while read conf; do 
-      service $(basename ${conf} .conf) restart; 
-    done
+    ls /etc/init*/neutron-* | grep -v ovs | while read file; do
+      service $(basename $file .conf) restart;
+    done || true
   when: modify_neutron_ini|changed or modify_ml2_ini|changed
 
 - name: ensure neutron sqlite is deleted
