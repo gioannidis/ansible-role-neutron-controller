@@ -79,11 +79,12 @@
         option: verbose, value: "{{ openstack_log_verbose }}" }
     - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
     - { section: DEFAULT, option: log_dir, value: /var/log/neutron }
-    - { section: ml2, option: type_drivers, value: "local,vlan" }
+    - { section: ml2, option: type_drivers, value: vlan }
     - { section: ml2, option: tenant_network_types, value: vlan }
     - { section: ml2, option: mechanism_drivers, value: openvswitch }
     - { section: ml2_type_vlan, 
-        option: network_vlan_ranges, value: "physnet1:1000:1999" }
+        option: network_vlan_ranges, value: provider }
+    - { section: ovs, option: bridge_mappings, value: "provider:br-ex" }
     - { section: securitygroup, option: firewall_driver,
         value: 
           neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver 
