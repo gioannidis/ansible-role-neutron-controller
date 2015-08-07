@@ -83,8 +83,8 @@
     - { section: ml2, option: tenant_network_types, value: vlan }
     - { section: ml2, option: mechanism_drivers, value: openvswitch }
     - { section: ml2_type_vlan, 
-        option: network_vlan_ranges, value: provider }
-    - { section: ovs, option: bridge_mappings, value: "provider:br-ex" }
+        option: network_vlan_ranges, value: "physnet:1000:1999" }
+    - { section: ovs, option: bridge_mappings, value: "physnet:br-ex" }
     - { section: securitygroup, option: firewall_driver,
         value: 
           neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver 
