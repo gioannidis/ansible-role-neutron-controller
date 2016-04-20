@@ -48,7 +48,7 @@
     - { section: DEFAULT, option: nova_admin_auth_url,
         value: "{{ openstack_identity_admin_url }}" }
     - { section: DEFAULT, option: core_plugin, value: ml2 }
-    - { section: DEFAULT, option: service_plugins, value: "router,q-lbaasv2,octavia,o-cw,o-hk,o-hm,o-api" }
+    - { section: DEFAULT, option: service_plugins, value: "router,neutron.plugins.services.agent_loadbalancer.plugin.LoadBalancerPluginv2" }
     - { section: DEFAULT, option: allow_overlapping_ips, value: true }
     - { section: database, option: connection,
         value: "mysql://neutron:{{ openstack_mysql_neutron_password }}@{{ 
