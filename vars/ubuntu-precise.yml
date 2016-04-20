@@ -10,6 +10,8 @@ openstack_neutron_controller_package_info:
   pkgs:
     - neutron-server
     - neutron-plugin-ml2
+    - neutron-lbaas-agent
+    - haproxy
     - python-mysqldb
     - python-neutronclient
 
