@@ -99,9 +99,11 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   with_items:
-    - { section: DEFAULT, option: service_provider, value: "LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default" }
     - { section: DEFAULT, option: user_group, value: haproxy }
     - { section: DEFAULT, option: interface_driver, value: neutron.agent.linux.interface.OVSInterfaceDriver }
+    - { section: service_auth, option: service_name, value: lbaas }
+    - { section: service_providers, option: service_provider, value: "LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default" }
+    - { section: service_providers, option: service_provider, value: "LOADBALANCERV2:Haproxy:neutron.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default" }
   register: modify_lbaas_agent_conf
 
 - name: restart neutron services if necessary
@@ -109,7 +111,7 @@
     ls /etc/init*/neutron-* | grep -v ovs | while read file; do
       service $(basename $file .conf) restart;
     done || true
-  when: modify_neutron_ini|changed or modify_ml2_ini|changed
+  when: modify_neutron_ini|changed or modify_ml2_ini|changed or modify_lbaas_agent_conf|changed
 
 - name: ensure neutron sqlite is deleted
   file:
